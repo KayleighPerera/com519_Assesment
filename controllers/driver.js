@@ -12,7 +12,7 @@ exports.list = async (req, res) => {
 };
 
 exports.create = async (req, res) => {   
-  let driver = new Driver({ name: req.body.driver_name, number: req.body.driver_number, team: req.body.driver_team }); 
+  let driver = new Driver({ Driver: req.body.driver_Driver, PTS: req.body.driver_PTS, Car: req.body.driver_Car, Year: req.body.driver_Year }); 
   try {
     await driver.save();
     res.redirect('/drivers')

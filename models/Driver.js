@@ -3,10 +3,10 @@ const { Schema } = mongoose;
 
 const driverSchema = new Schema(
   {
-    name: String,
-    number: { type: Number, default: 0 },
-    team: String,
-    year: Number,
+    Driver: String,
+    PTS: { type: Number, default: 0 },
+    Car: String,
+    Year: Number,
   },
   { timestamps: true }
 );

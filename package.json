@@ -1,5 +1,5 @@
 {
-  "name": "FormulaOne",
+  "name": "com519_Assesment",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,14 +14,29 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bulk": "^2.0.1",
+    "collections": "^5.1.13",
     "dotenv": "^9.0.2",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "mongodb": "^3.6.9",
-    "mongoose": "^5.13.0",
-    "normalize-url": "^4.5.0"
+    "fs": "0.0.1-security",
+    "load": "^1.0.2",
+    "loading": "^1.13.3",
+    "loading-cli": "^1.1.0",
+    "mongo": "^0.1.0",
+    "mongodb": "^3.7.3",
+    "mongoose": "^5.13.14",
+    "node": "^17.3.1",
+    "normalize-url": "^4.5.0",
+    "ns": "^1.0.2",
+    "operations": "^0.1.2",
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.8"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
