@@ -2,7 +2,7 @@
 🏎️This project is a simple web application that uses Create, Read, Update, and Delete functionality for a database of 1950-2020 driver who won world champions in Formula One details including their Name, their Driver Number, their Team, the points scored and the year won 🏁
 
 # How to Run
-🏎️Clone this repository https://github.com/KayleighPerera/COM519Assesment.git When project is open in Visual Studio Code, install the dependencies listed below:
+🏎️Clone this repository https://github.com/KayleighPerera/com519_Assesment When project is open in Visual Studio Code, install the dependencies listed below:
 
     npm install
     npm install dotenv
