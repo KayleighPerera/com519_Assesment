@@ -70,108 +70,108 @@ app.get("/login", (req, res) => {
 });
 
 
-//Loading in the data from drivers.json (contains an error) but dataset still loaded in
-async function main() {
-  try {
-    await client.connect();
-    const db = client.db();
-    const results = await db.collection("drivers").find({}).count();
+// //Loading in the data from drivers.json (contains an error) but dataset still loaded in
+// async function main() {
+//   try {
+//     await client.connect();
+//     const db = client.db();
+//     const results = await db.collection("drivers").find({}).count();
 
-    /**
-     * If existing records then delete the current collections
-     */
-    if (results) {
-      console.info("deleting collection");
-      await db.collection("drivers").drop();
-    }
+//     /**
+//      * If existing records then delete the current collections
+//      */
+//     if (results) {
+//       console.info("deleting collection");
+//       await db.collection("drivers").drop();
+//     }
 
-    /**
-     * This is just a fun little loader module that displays a spinner
-     * to the command line
-     */
-    const load = loading("importing your drivers").start();
+//     /**
+//      * This is just a fun little loader module that displays a spinner
+//      * to the command line
+//      */
+//     const load = loading("importing your drivers").start();
 
-    /**
-     * Import the JSON data into the database
-     */
+//     /**
+//      * Import the JSON data into the database
+//      */
 
-    const data = await fs.readFile(path.join(__dirname, "drivers.json"), "utf8");
-    await db.collection("drivers").insertMany(JSON.parse(data));
+//     const data = await fs.readFile(path.join(__dirname, "drivers.json"), "utf8");
+//     await db.collection("drivers").insertMany(JSON.parse(data));
 
-    /**
-     * This perhaps appears a little more complex than it is. Below, we are
-     * grouping the drivers. Finally, we tidy up the output so it represents the format we need for our new collection
-     */
+//     /**
+//      * This perhaps appears a little more complex than it is. Below, we are
+//      * grouping the drivers. Finally, we tidy up the output so it represents the format we need for our new collection
+//      */
 
-    const driversRef = await db.collection("drivers").aggregate([
-      { $match: { driver_name: { $ne: null } } },
-      {
-        $group: {
-          _id: "$_id",
-          name: { "$first": "$name" },
-          number: { $sum: 1 },
-          team: { "$first": "$driver_team" },
-          year: { $sum: 1 },
-        },
-      },
-      { $set: { name: "$driver_name", _id: "$_id" } },
-    ]);
-    /**
-     * Below, we output the results of our aggregate into a
-     * new collection
-     */
-    const drivers = await driversRef.toArray();
-    await db.collection("drivers").insertMany(drivers);
+//     const driversRef = await db.collection("drivers").aggregate([
+//       { $match: { driver_name: { $ne: null } } },
+//       {
+//         $group: {
+//           _id: "$_id",
+//           name: { "$first": "$name" },
+//           number: { $sum: 1 },
+//           team: { "$first": "$driver_team" },
+//           year: { $sum: 1 },
+//         },
+//       },
+//       { $set: { name: "$driver_name", _id: "$_id" } },
+//     ]);
+//     /**
+//      * Below, we output the results of our aggregate into a
+//      * new collection
+//      */
+//     const drivers = await driversRef.toArray();
+//     await db.collection("drivers").insertMany(drivers);
 
-    /** Our final data manipulation is to reference each document in the
-     * tastings collection to a taster id
-     */
+//     /** Our final data manipulation is to reference each document in the
+//      * tastings collection to a taster id
+//      */
 
-    const updateddriversRef = db.collection("drivers").find({});
-    const updateddrivers = await updateddriversRef.toArray();
-    updateddrivers.forEach(async ({ _id, name }) => {
-      await db.collection("drivers").updateMany({ driver_name: name }, [
-        {
-          $set: {
-            driver_id: _id,
-            name: "$driver_name",
-            number: "$driver_number",
-            team: "$driver_team",
-            year: { $count: "$driver_year" },
-          },
-        },
-      ]);
+//     const updateddriversRef = db.collection("drivers").find({});
+//     const updateddrivers = await updateddriversRef.toArray();
+//     updateddrivers.forEach(async ({ _id, name }) => {
+//       await db.collection("drivers").updateMany({ driver_name: name }, [
+//         {
+//           $set: {
+//             driver_id: _id,
+//             name: "$driver_name",
+//             number: "$driver_number",
+//             team: "$driver_team",
+//             year: { $count: "$driver_year" },
+//           },
+//         },
+//       ]);
 
-      /**
-       * we can get rid of region_1/2 off our root document, since we've
-       * placed them in an array
-       */
-      await db
-        .collection("drivers")
-        .updateMany({}, { $unset: { driver_1: "", driver_2: " " } });
+//       /**
+//        * we can get rid of region_1/2 off our root document, since we've
+//        * placed them in an array
+//        */
+//       await db
+//         .collection("drivers")
+//         .updateMany({}, { $unset: { driver_1: "", driver_2: " " } });
 
-      /**
-       * Finally, we remove nulls regions from our collection of arrays
-       * */
-      await db
-        .collection("drivers")
-        .updateMany({ drivers: { $all: [null] } }, [
-          { $set: { drivers: [{ $arrayElemAt: ["$driver_name", 0] }] } },
-        ]);
-      load.stop();
-      console.info(
-        `drivers collection set up! `
-      );
-      process.exit();
-    });
-  } catch (error) {
-    console.error("error:", error);
-    process.exit();
-  }
-}
+//       /**
+//        * Finally, we remove nulls regions from our collection of arrays
+//        * */
+//       await db
+//         .collection("drivers")
+//         .updateMany({ drivers: { $all: [null] } }, [
+//           { $set: { drivers: [{ $arrayElemAt: ["$driver_name", 0] }] } },
+//         ]);
+//       load.stop();
+//       console.info(
+//         `drivers collection set up! `
+//       );
+//       process.exit();
+//     });
+//   } catch (error) {
+//     console.error("error:", error);
+//     process.exit();
+//   }
+// }
 
 
-main();
+// main();
 
 
 
