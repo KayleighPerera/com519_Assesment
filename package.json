@@ -14,16 +14,20 @@
     "url": "https://github.com/KayleighPerera/com519_Assesment.git"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.1",
     "bulk": "^2.0.1",
+    "chalk": "^4.1.0",
     "collections": "^5.1.13",
     "dotenv": "^9.0.2",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
+    "express-session": "^1.17.1",
     "fs": "0.0.1-security",
     "load": "^1.0.2",
     "loading": "^1.13.3",
     "loading-cli": "^1.1.0",
+    "md5": "^2.3.0",
     "mongo": "^0.1.0",
     "mongodb": "^3.7.3",
     "mongoose": "^5.13.14",
@@ -42,9 +46,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-      "cross-env": "^7.0.3",
-      "nodemon": "^2.0.5"
-    }
+  "license": "ISC"
 }
